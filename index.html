@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="南京大学建筑与城市规划学院胡宏老师课题组网站视觉 Demo。"
+    />
+    <meta name="theme-color" content="#edf1ec" />
+    <title>胡宏老师课题组｜研究城市、行为与环境</title>
+    <link rel="stylesheet" href="styles.css" />
+    <noscript>
+      <style>
+        .hero-eyebrow,
+        .hero h1,
+        .hero-intro,
+        .hero-stats,
+        .hero-visual,
+        [data-reveal] {
+          opacity: 1 !important;
+          transform: none !important;
+          clip-path: none !important;
+        }
+      </style>
+    </noscript>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <div class="scroll-progress" aria-hidden="true">
+      <span id="scrollProgress"></span>
+    </div>
+
+    <!-- [LEARN-HTML-01] 全站页头：品牌、导航、移动菜单与联系入口 -->
+    <header class="site-header" id="siteHeader">
+      <a class="brand" href="#home" aria-label="返回首页">
+        <span class="brand-mark" aria-hidden="true">H/H</span>
+        <span class="brand-copy">
+          <strong>胡宏老师课题组</strong>
+          <small>南京大学建筑与城市规划学院</small>
+        </span>
+      </a>
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primaryNav"
+        aria-label="打开导航菜单"
+      >
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="primary-nav" id="primaryNav" aria-label="主要导航">
+        <a href="#research">研究</a>
+        <a href="#outputs">成果</a>
+        <a href="#people">成员</a>
+        <a href="#methods">方法</a>
+        <a href="#about">关于</a>
+      </nav>
+
+      <a class="header-cta" href="mailto:h.hu@nju.edu.cn">
+        <span>联系 / 加入</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main id="main-content">
+      <!-- [LEARN-HTML-02] Hero：研究使命、行动入口、数据快照与 Canvas -->
+      <section class="hero" id="home" aria-labelledby="heroTitle">
+        <div class="hero-grid page-shell">
+          <div class="hero-copy">
+            <p class="eyebrow hero-eyebrow">
+              <span>NJU · ARCH &amp; URBAN PLANNING</span>
+              <span>RESEARCH GROUP / 2026</span>
+            </p>
+
+            <h1 id="heroTitle">
+              从空间出发，<br />理解城市中的<span class="ink-shift">行为与环境</span>
+            </h1>
+
+            <div class="hero-intro">
+              <p>
+                围绕低碳城市与社区更新、社会—生态系统、建成环境—行为—健康关系，
+                探索从区域到个体的多尺度规划支持路径。
+              </p>
+              <div class="hero-actions" aria-label="首页行动入口">
+                <a class="button button--solid" href="#research">
+                  探索研究方向 <span aria-hidden="true">↓</span>
+                </a>
+                <a class="text-link" href="#outputs">
+                  浏览代表成果 <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="hero-stats" aria-label="课题组资料快照">
+              <div>
+                <strong>06</strong>
+                <span>届成员谱系</span>
+              </div>
+              <div>
+                <strong>12</strong>
+                <span>名正式组内学生</span>
+              </div>
+              <div>
+                <strong>11</strong>
+                <span>项已核验组内成果</span>
+              </div>
+              <p>数据截至 2026.08</p>
+            </div>
+          </div>
+
+          <figure class="hero-visual" aria-labelledby="fieldCaption">
+            <canvas id="fieldCanvas" aria-hidden="true"></canvas>
+            <div class="field-overlay" aria-hidden="true">
+              <span class="field-code">FIELD / NJ·32.06°N</span>
+              <span class="field-scale">REGION → CITY → BLOCK → PERSON</span>
+              <span class="field-axis field-axis--x">SPATIAL SCALE</span>
+              <span class="field-axis field-axis--y">HUMAN EXPERIENCE</span>
+              <div class="field-core">
+                <span>空间</span>
+                <i></i>
+                <span>行为</span>
+                <i></i>
+                <span>环境</span>
+              </div>
+            </div>
+            <figcaption id="fieldCaption">
+              <span>研究场域 01</span>
+              <span>多尺度城市系统抽象图</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="hero-marquee" aria-hidden="true">
+          <span>LOW-CARBON URBANISM</span>
+          <i></i>
+          <span>SOCIO-ECOLOGICAL SYSTEMS</span>
+          <i></i>
+          <span>ENVIRONMENT · BEHAVIOR · HEALTH</span>
+        </div>
+      </section>
+
+      <!-- [LEARN-HTML-03] Manifesto：课题组研究立场 -->
+      <section class="manifesto" aria-label="研究理念">
+        <div class="page-shell manifesto-grid">
+          <p class="section-index">00 / POSITION</p>
+          <p class="manifesto-line" data-reveal>
+            城市不是静止的空间容器。它由物质流、人的选择、环境暴露与制度行动共同塑造。
+            我们把这些关系转译为<span>可分析、可讨论、可设计</span>的规划证据。
+          </p>
+        </div>
+      </section>
+
+      <!-- [LEARN-HTML-04] Research：三个研究方向与 SVG 示意图 -->
+      <section class="research section" id="research" aria-labelledby="researchTitle">
+        <div class="page-shell">
+          <header class="section-heading">
+            <div>
+              <p class="section-index">01 / RESEARCH</p>
+              <h2 id="researchTitle">三个方向，<br />一条多尺度研究路径</h2>
+            </div>
+            <p>
+              从区域社会—生态演进，到社区碳代谢和个体健康体验，
+              研究对象不同，但共享空间分析、行为调查与规划设计的证据链。
+            </p>
+          </header>
+
+          <div class="research-list">
+            <article class="research-item" data-reveal>
+              <div class="research-number">R / 01</div>
+              <div class="research-copy">
+                <p class="research-scale">CITY · BLOCK · COMMUNITY</p>
+                <h3>低碳城市与<br />社区更新</h3>
+                <p>
+                  识别城市、街区、社区和建筑的碳代谢模式，理解空间形态与居民低碳行为之间的关系，
+                  探索可实施的适应性减碳策略。
+                </p>
+                <ul class="tag-list" aria-label="相关研究方法">
+                  <li>碳代谢</li>
+                  <li>空间形态</li>
+                  <li>行为意愿</li>
+                  <li>更新策略</li>
+                </ul>
+                <a class="row-link" href="#outputs">
+                  查看相关成果 <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <figure class="research-graphic research-graphic--carbon">
+                <svg viewBox="0 0 640 500" role="img" aria-label="社区空间形态与碳流关系抽象图">
+                  <g class="map-grid">
+                    <path d="M52 54H588M52 132H588M52 210H588M52 288H588M52 366H588M52 444H588" />
+                    <path d="M52 54V444M142 54V444M232 54V444M322 54V444M412 54V444M502 54V444M588 54V444" />
+                  </g>
+                  <g class="carbon-blocks">
+                    <rect x="72" y="74" width="142" height="116" />
+                    <rect x="252" y="74" width="70" height="116" />
+                    <rect x="360" y="74" width="206" height="60" />
+                    <rect x="360" y="164" width="94" height="124" />
+                    <rect x="490" y="164" width="76" height="124" />
+                    <rect x="72" y="230" width="250" height="136" />
+                    <rect x="72" y="396" width="112" height="28" />
+                    <rect x="222" y="396" width="344" height="28" />
+                  </g>
+                  <path class="carbon-flow" d="M92 346C180 284 212 304 278 238S388 140 544 106" />
+                  <path class="carbon-flow carbon-flow--second" d="M122 104C190 148 210 192 306 206S430 272 538 250" />
+                  <g class="carbon-points">
+                    <circle cx="92" cy="346" r="7" />
+                    <circle cx="278" cy="238" r="7" />
+                    <circle cx="544" cy="106" r="7" />
+                    <circle cx="122" cy="104" r="7" />
+                    <circle cx="306" cy="206" r="7" />
+                    <circle cx="538" cy="250" r="7" />
+                  </g>
+                </svg>
+                <figcaption>
+                  <span>CARBON FLOW / BLOCK MORPHOLOGY</span>
+                  <span>示意图，不代表真实研究数据</span>
+                </figcaption>
+              </figure>
+            </article>
+
+            <article class="research-item research-item--reverse" data-reveal>
+              <div class="research-number">R / 02</div>
+              <div class="research-copy">
+                <p class="research-scale">REGION · LANDSCAPE · GOVERNANCE</p>
+                <h3>社会—生态系统<br />与区域治理</h3>
+                <p>
+                  研究区域社会—生态系统的长期演进、压力与响应机制，
+                  将生态安全格局、减排增汇潜力和智慧治理转化为规划判断。
+                </p>
+                <ul class="tag-list" aria-label="相关研究方法">
+                  <li>适应性循环</li>
+                  <li>生态安全</li>
+                  <li>情景评估</li>
+                  <li>区域治理</li>
+                </ul>
+                <a class="row-link" href="#outputs">
+                  查看相关成果 <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <figure class="research-graphic research-graphic--ecology">
+                <svg viewBox="0 0 640 500" role="img" aria-label="区域社会生态系统循环抽象图">
+                  <g class="eco-orbits">
+                    <ellipse cx="320" cy="250" rx="248" ry="180" />
+                    <ellipse cx="320" cy="250" rx="176" ry="126" />
+                    <ellipse cx="320" cy="250" rx="98" ry="72" />
+                  </g>
+                  <path class="eco-land" d="M74 282C126 218 182 224 230 190C286 150 328 178 362 144C410 98 480 126 568 202V398H74Z" />
+                  <path class="eco-river" d="M96 332C176 326 198 260 274 276S366 354 430 304S496 222 560 250" />
+                  <g class="eco-nodes">
+                    <circle cx="132" cy="250" r="8" />
+                    <circle cx="230" cy="190" r="8" />
+                    <circle cx="362" cy="144" r="8" />
+                    <circle cx="488" cy="184" r="8" />
+                    <circle cx="430" cy="304" r="8" />
+                    <circle cx="274" cy="276" r="8" />
+                  </g>
+                  <g class="eco-labels">
+                    <text x="104" y="238">PRESSURE</text>
+                    <text x="344" y="132">STATE</text>
+                    <text x="444" y="334">RESPONSE</text>
+                  </g>
+                </svg>
+                <figcaption>
+                  <span>ADAPTIVE CYCLE / REGIONAL SYSTEM</span>
+                  <span>示意图，不代表真实研究数据</span>
+                </figcaption>
+              </figure>
+            </article>
+
+            <article class="research-item" data-reveal>
+              <div class="research-number">R / 03</div>
+              <div class="research-copy">
+                <p class="research-scale">ENVIRONMENT · BEHAVIOR · HEALTH</p>
+                <h3>建成环境、行为<br />与健康</h3>
+                <p>
+                  连接居住环境、绿地暴露、日常步行与心理健康，
+                  关注人们实际经历的活动空间，而不仅是居住地周边的静态环境。
+                </p>
+                <ul class="tag-list" aria-label="相关研究方法">
+                  <li>活动空间</li>
+                  <li>绿地暴露</li>
+                  <li>步行行为</li>
+                  <li>心理健康</li>
+                </ul>
+                <a class="row-link" href="#outputs">
+                  查看相关成果 <span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <figure class="research-graphic research-graphic--health">
+                <svg viewBox="0 0 640 500" role="img" aria-label="活动空间、绿地暴露与健康关系抽象图">
+                  <g class="health-rings">
+                    <circle cx="322" cy="250" r="190" />
+                    <circle cx="322" cy="250" r="128" />
+                    <circle cx="322" cy="250" r="66" />
+                  </g>
+                  <g class="health-paths">
+                    <path d="M112 358C168 296 196 310 242 262S314 162 380 182S430 298 526 162" />
+                    <path d="M94 192C166 162 210 194 272 234S400 354 548 310" />
+                  </g>
+                  <g class="health-points">
+                    <circle cx="112" cy="358" r="9" />
+                    <circle cx="242" cy="262" r="9" />
+                    <circle cx="380" cy="182" r="9" />
+                    <circle cx="526" cy="162" r="9" />
+                    <circle cx="94" cy="192" r="9" />
+                    <circle cx="272" cy="234" r="9" />
+                    <circle cx="548" cy="310" r="9" />
+                  </g>
+                  <g class="health-core">
+                    <circle cx="322" cy="250" r="22" />
+                    <text x="322" y="256">H</text>
+                  </g>
+                </svg>
+                <figcaption>
+                  <span>ACTIVITY SPACE / EXPOSURE</span>
+                  <span>示意图，不代表真实研究数据</span>
+                </figcaption>
+              </figure>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- [LEARN-HTML-05] Outputs：筛选按钮、代表成果与统计口径 -->
+      <section class="outputs section section--dark" id="outputs" aria-labelledby="outputsTitle">
+        <div class="page-shell">
+          <header class="section-heading section-heading--dark">
+            <div>
+              <p class="section-index">02 / SELECTED OUTPUTS</p>
+              <h2 id="outputsTitle">研究成果不是终点，<br />而是可被继续使用的证据</h2>
+            </div>
+            <p>
+              以下只选取已经核验具有课题组内部关系的成果。
+              普通论文直达 DOI 或正式页面，重点项目再展开完整研究故事。
+            </p>
+          </header>
+
+          <div class="output-toolbar">
+            <div class="output-filters" role="group" aria-label="按成果类型筛选">
+              <button type="button" data-filter="all" aria-pressed="true">全部</button>
+              <button type="button" data-filter="paper" aria-pressed="false">论文</button>
+              <button type="button" data-filter="patent" aria-pressed="false">专利</button>
+              <button type="button" data-filter="student" aria-pressed="false">学生创新</button>
+            </div>
+            <p id="outputStatus" role="status" aria-live="polite">显示 5 项代表成果</p>
+          </div>
+
+          <div class="output-list" id="outputList">
+            <article class="output-row" data-output-type="paper">
+              <div class="output-meta">
+                <span>2026</span>
+                <span>论文 / PAPER</span>
+              </div>
+              <div class="output-main">
+                <h3>基于建成环境和行为意愿的社区低碳更新潜力类型识别</h3>
+                <p>王天豪、孔繁花、胡宏、赵慧敏 · 《应用生态学报》37(8)</p>
+              </div>
+              <a
+                href="https://doi.org/10.13287/j.1001-9332.202608.025"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="打开论文 DOI：社区低碳更新潜力类型识别"
+              >DOI ↗</a>
+            </article>
+
+            <article class="output-row" data-output-type="paper">
+              <div class="output-meta">
+                <span>2025</span>
+                <span>论文 / PAPER</span>
+              </div>
+              <div class="output-main">
+                <h3>生命周期视角下城市多尺度碳排放研究进展及协同减排策略探索</h3>
+                <p>周含笑、胡宏 · 《应用生态学报》36(10)</p>
+              </div>
+              <a
+                href="https://doi.org/10.13287/j.1001-9332.202510.024"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="打开论文 DOI：城市多尺度碳排放研究进展"
+              >DOI ↗</a>
+            </article>
+
+            <article class="output-row" data-output-type="paper">
+              <div class="output-meta">
+                <span>2025</span>
+                <span>论文 / PAPER</span>
+              </div>
+              <div class="output-main">
+                <h3>The effects of greenspace exposures on walking behaviors and mental health</h3>
+                <p>Hong Hu、Hanxiao Zhou、Jiaqi Cheng、Tianyuan Shu · Applied Geography 177</p>
+              </div>
+              <a
+                href="https://doi.org/10.1016/j.apgeog.2025.103545"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="打开 Applied Geography 论文 DOI"
+              >DOI ↗</a>
+            </article>
+
+            <article class="output-row" data-output-type="patent">
+              <div class="output-meta">
+                <span>2025</span>
+                <span>发明专利 / PATENT</span>
+              </div>
+              <div class="output-main">
+                <h3>一种城市社区低碳更新多目标优化处理方法及系统</h3>
+                <p>刘伟嘉、胡宏、陈美伊 · CN119830590B · 已授权</p>
+              </div>
+              <a
+                href="https://patents.google.com/patent/CN119830590A/zh"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="打开低碳更新专利记录"
+              >专利 ↗</a>
+            </article>
+
+            <article class="output-row" data-output-type="student">
+              <div class="output-meta">
+                <span>2023</span>
+                <span>学生创新 / PROJECT</span>
+              </div>
+              <div class="output-main">
+                <h3>“碳享家园”——面向未来低碳社区更新的共创游戏创意设计</h3>
+                <p>负责人：曾洁霖 · 指导教师：胡宏 · 南京大学大学生创业训练计划</p>
+              </div>
+              <a
+                href="https://ttc.nju.edu.cn/6a/76/c11255a617078/page.htm"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="打开碳享家园项目官方公示"
+              >来源 ↗</a>
+            </article>
+          </div>
+
+          <div class="output-footnote">
+            <p>7 篇论文 · 1 项授权发明专利 · 2 项学生创新 · 1 次学术报告</p>
+            <span>统计口径已核验</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- [LEARN-HTML-06] People：负责人和六届正式组内学生 -->
+      <section class="people section" id="people" aria-labelledby="peopleTitle">
+        <div class="page-shell people-grid">
+          <div class="people-lead">
+            <p class="section-index">03 / PEOPLE</p>
+            <h2 id="peopleTitle">六届成员，<br />共享一张研究网络</h2>
+            <p>
+              团队成员按届次组织，但研究合作可以跨越年份。
+              页面只使用已经核验的姓名与届次；头像、简介和毕业去向在本人授权后开放。
+            </p>
+
+            <article class="pi-profile">
+              <div class="portrait-placeholder" role="img" aria-label="胡宏老师照片待授权">
+                <span>HH</span>
+                <small>PHOTO PENDING</small>
+              </div>
+              <div>
+                <p>课题组负责人</p>
+                <h3>胡宏 <span>HU Hong</span></h3>
+                <p>副教授 · 硕士生导师</p>
+                <a href="mailto:h.hu@nju.edu.cn">h.hu@nju.edu.cn ↗</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="cohort-list" aria-label="六届成员名单">
+            <section class="cohort-row">
+              <div><span>06</span><small>2025</small></div>
+              <h3>第六届</h3>
+              <p>蔡隽晴 · 卞雪婷</p>
+            </section>
+            <section class="cohort-row">
+              <div><span>05</span><small>2024</small></div>
+              <h3>第五届</h3>
+              <p>王天豪 · 辛楚梁</p>
+            </section>
+            <section class="cohort-row">
+              <div><span>04</span><small>2023</small></div>
+              <h3>第四届</h3>
+              <p>刘伟嘉 · 周含笑</p>
+            </section>
+            <section class="cohort-row">
+              <div><span>03</span><small>2022</small></div>
+              <h3>第三届</h3>
+              <p>张高峰 · 曾洁霖</p>
+            </section>
+            <section class="cohort-row">
+              <div><span>02</span><small>2021</small></div>
+              <h3>第二届</h3>
+              <p>陈美伊 · 赵慧敏</p>
+            </section>
+            <section class="cohort-row">
+              <div><span>01</span><small>2020</small></div>
+              <h3>第一届</h3>
+              <p>李可昕 · 王颜</p>
+            </section>
+            <p class="cohort-note">
+              “第一届—第六届”为结合 2020—2025 年双选名单与课题组内部确认建立的谱系，组外人员不计入。
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- [LEARN-HTML-07] Methods：五类研究方法 -->
+      <section class="methods section" id="methods" aria-labelledby="methodsTitle">
+        <div class="page-shell">
+          <header class="methods-head">
+            <p class="section-index">04 / METHODS</p>
+            <h2 id="methodsTitle">把城市问题，转译为可以检验的空间证据。</h2>
+          </header>
+
+          <ol class="method-list">
+            <li>
+              <span>01</span>
+              <strong>空间分析</strong>
+              <small>GIS · MULTI-SCALE</small>
+            </li>
+            <li>
+              <span>02</span>
+              <strong>统计建模</strong>
+              <small>INFERENCE · SCENARIO</small>
+            </li>
+            <li>
+              <span>03</span>
+              <strong>机器学习</strong>
+              <small>URBAN DATA · PATTERN</small>
+            </li>
+            <li>
+              <span>04</span>
+              <strong>问卷调查</strong>
+              <small>BEHAVIOR · EXPERIENCE</small>
+            </li>
+            <li>
+              <span>05</span>
+              <strong>规划设计</strong>
+              <small>STRATEGY · INTERVENTION</small>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- [LEARN-HTML-08] About：联系、加入与招生措辞边界 -->
+      <section class="about section" id="about" aria-labelledby="aboutTitle">
+        <div class="page-shell about-grid">
+          <div>
+            <p class="section-index">05 / ABOUT &amp; JOIN</p>
+            <h2 id="aboutTitle">下一项研究，<br />可能从一次联系开始。</h2>
+          </div>
+          <div class="about-copy">
+            <p>
+              如果你关注低碳城市、社区更新、空间行为或健康环境，
+              欢迎先阅读我们的研究与成果，再说明你的研究兴趣和已有基础。
+            </p>
+            <a class="contact-link" href="mailto:h.hu@nju.edu.cn">
+              <span>联系课题组</span>
+              <span>h.hu@nju.edu.cn</span>
+              <span aria-hidden="true">↗</span>
+            </a>
+            <p class="about-note">
+              招生名额、申请材料与具体流程需经胡宏老师确认后发布；本 Demo 不作招生承诺。
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- [LEARN-HTML-09] Footer：院系归属、站内入口和公开联系方式 -->
+    <footer class="site-footer">
+      <div class="page-shell footer-grid">
+        <div>
+          <strong>胡宏老师课题组</strong>
+          <p>南京大学建筑与城市规划学院</p>
+        </div>
+        <div>
+          <span>RESEARCH</span>
+          <a href="#research">研究方向</a>
+          <a href="#outputs">代表成果</a>
+          <a href="#people">团队成员</a>
+        </div>
+        <div>
+          <span>CONTACT</span>
+          <a href="mailto:h.hu@nju.edu.cn">h.hu@nju.edu.cn</a>
+          <a
+            href="https://arch.nju.edu.cn/szdw/fjs/20200826/i126594.html"
+            target="_blank"
+            rel="noreferrer"
+          >学院教师主页 ↗</a>
+        </div>
+        <p class="footer-meta">VISUAL DEMO · 2026.08<br />非正式上线版本</p>
+      </div>
+    </footer>
+
+    <!-- [LEARN-HTML-10] 页面只加载运行时脚本；qa-edge.mjs 不参与网页运行 -->
+    <script src="script.js"></script>
+  </body>
+</html>
