@@ -7,9 +7,12 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const EDGE_PATH =
   "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
 const CDP_PORT = 9238;
-const demoDirectory = path.dirname(fileURLToPath(import.meta.url));
-const screenshotsDirectory = path.join(demoDirectory, "screenshots");
-const pageUrl = pathToFileURL(path.join(demoDirectory, "index.html")).href;
+const toolsDirectory = path.dirname(fileURLToPath(import.meta.url));
+const repositoryDirectory = path.dirname(toolsDirectory);
+const websiteDirectory = path.join(repositoryDirectory, "docs");
+const qaDirectory = path.join(repositoryDirectory, "local-data", "qa");
+const screenshotsDirectory = path.join(qaDirectory, "screenshots");
+const pageUrl = pathToFileURL(path.join(websiteDirectory, "index.html")).href;
 const suffixArgument = process.argv.find((argument) =>
   argument.startsWith("--suffix="),
 );
@@ -170,7 +173,7 @@ const screenshot = async (baseName) => {
     `${baseName}${suffix}.png`,
   );
   writeNewFile(output, Buffer.from(result.data, "base64"));
-  return path.relative(demoDirectory, output).replaceAll("\\", "/");
+  return path.relative(qaDirectory, output).replaceAll("\\", "/");
 };
 
 // [LEARN-QA-04] 验收场景：390px / 1440px、菜单、筛选、内容数量和截图。
@@ -297,7 +300,7 @@ try {
   }))()`);
 
   const reportPath = path.join(
-    demoDirectory,
+    qaDirectory,
     `qa-report${suffix}.json`,
   );
   writeNewFile(reportPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");

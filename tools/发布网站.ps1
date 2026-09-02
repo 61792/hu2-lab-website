@@ -3,19 +3,16 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
-Set-Location -LiteralPath $PSScriptRoot
+$RepositoryRoot = Split-Path -Parent $PSScriptRoot
+Set-Location -LiteralPath $RepositoryRoot
 
 $ExpectedRemote = "https://github.com/61792/hu2-lab-website.git"
 $SiteUrl = "https://61792.github.io/hu2-lab-website/"
 $VersionedPaths = @(
-    "index.html",
-    "styles.css",
-    "script.js",
-    ".nojekyll",
+    "docs",
+    "tools",
     "README.md",
-    ".gitignore",
-    "qa-edge.mjs",
-    "发布网站.ps1"
+    ".gitignore"
 )
 
 Write-Host "[1/5] 检查部署仓库..." -ForegroundColor Cyan
@@ -34,7 +31,7 @@ if ($branch -ne "main") {
     throw "发布脚本只能在 main 分支运行；当前分支为：$branch"
 }
 
-foreach ($path in @("index.html", "styles.css", "script.js")) {
+foreach ($path in @("docs/index.html", "docs/styles.css", "docs/script.js")) {
     if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
         throw "缺少必要文件：$path"
     }
@@ -42,9 +39,13 @@ foreach ($path in @("index.html", "styles.css", "script.js")) {
 
 Write-Host "[2/5] 检查 JavaScript 语法和远程状态..." -ForegroundColor Cyan
 if (Get-Command node -ErrorAction SilentlyContinue) {
-    node --check script.js
+    node --check docs/script.js
     if ($LASTEXITCODE -ne 0) {
-        throw "script.js 语法检查失败。"
+        throw "docs/script.js 语法检查失败。"
+    }
+    node --check tools/qa-edge.mjs
+    if ($LASTEXITCODE -ne 0) {
+        throw "tools/qa-edge.mjs 语法检查失败。"
     }
 }
 
@@ -75,23 +76,33 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 git diff --cached --quiet
-if ($LASTEXITCODE -eq 0) {
-    Write-Host "没有需要发布的网页变更。" -ForegroundColor Yellow
+$hasStagedChanges = $LASTEXITCODE -eq 1
+if (($LASTEXITCODE -ne 0) -and (-not $hasStagedChanges)) {
+    throw "无法检查待提交差异。"
+}
+
+if ($hasStagedChanges) {
+    Write-Host "即将发布以下变更：" -ForegroundColor Yellow
+    git diff --cached --stat
+
+    if ([string]::IsNullOrWhiteSpace($Message)) {
+        $Message = "更新网站 " + (Get-Date -Format "yyyy-MM-dd HH:mm")
+    }
+
+    Write-Host "[4/5] 创建提交：$Message" -ForegroundColor Cyan
+    git commit -m $Message
+    if ($LASTEXITCODE -ne 0) {
+        throw "创建 Git 提交失败。"
+    }
+} else {
+    Write-Host "[4/5] 没有新的工作区变更。" -ForegroundColor Yellow
+}
+
+$currentLocal = (git rev-parse HEAD).Trim()
+if ($currentLocal -eq $remote) {
+    Write-Host "本地与远程一致，没有需要发布的提交。" -ForegroundColor Yellow
     Write-Host $SiteUrl -ForegroundColor Green
     exit 0
-}
-
-Write-Host "即将发布以下变更：" -ForegroundColor Yellow
-git diff --cached --stat
-
-if ([string]::IsNullOrWhiteSpace($Message)) {
-    $Message = "更新网站 " + (Get-Date -Format "yyyy-MM-dd HH:mm")
-}
-
-Write-Host "[4/5] 创建提交：$Message" -ForegroundColor Cyan
-git commit -m $Message
-if ($LASTEXITCODE -ne 0) {
-    throw "创建 Git 提交失败。"
 }
 
 Write-Host "[5/5] 推送并触发 GitHub Pages 更新..." -ForegroundColor Cyan

@@ -1,6 +1,7 @@
-# Generated QA artifacts after the retained baseline
+# Local research material and generated QA artifacts
+local-data/
 qa-report*.json
-screenshots/*.png
+screenshots/
 
 # Build output and dependencies
 node_modules/
