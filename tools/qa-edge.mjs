@@ -293,11 +293,36 @@ try {
     methods: document.querySelectorAll('.method-list li').length,
     snapshotStats: [...document.querySelectorAll('.hero-stats strong')]
       .map((item) => item.textContent.trim()),
+    inlineMemberTypography: (() => {
+      const names = [...document.querySelectorAll('.cohort-row p span')];
+      const properties = ['fontSize', 'fontWeight', 'letterSpacing', 'lineHeight'];
+      const comparisons = names.map((name) => {
+        const style = getComputedStyle(name);
+        const parentStyle = getComputedStyle(name.parentElement);
+        return {
+          text: name.textContent.trim(),
+          matchesParent: properties.every(
+            (property) => style[property] === parentStyle[property],
+          ),
+          fontSize: style.fontSize,
+          lineHeight: style.lineHeight
+        };
+      });
+      return {
+        count: names.length,
+        allMatchParent: comparisons.every((item) => item.matchesParent),
+        comparisons
+      };
+    })(),
     canvasResolution: {
       width: document.querySelector('#fieldCanvas').width,
       height: document.querySelector('#fieldCanvas').height
     }
   }))()`);
+
+  if (!report.checks.content.inlineMemberTypography.allMatchParent) {
+    throw new Error('Inline member names do not match their parent typography.');
+  }
 
   const reportPath = path.join(
     qaDirectory,
