@@ -1511,6 +1511,22 @@ h3 {
     --header-height: 72px;
   }
 
+  body::before {
+    content: "";
+    position: fixed;
+    z-index: 99;
+    inset: 0;
+    min-height: 100dvh;
+    pointer-events: none;
+    background: rgba(12, 33, 27, 0.3);
+    opacity: 0;
+    transition: opacity 240ms ease;
+  }
+
+  body.menu-open::before {
+    opacity: 1;
+  }
+
   .site-header,
   .site-header.is-scrolled {
     grid-template-columns: 1fr auto;
