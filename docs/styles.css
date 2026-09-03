@@ -418,6 +418,18 @@ h3 {
   gap: 16px;
 }
 
+.hero-action-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+  flex: 0 0 auto;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+
 .button {
   display: inline-flex;
   align-items: center;
@@ -628,12 +640,14 @@ h3 {
   margin-bottom: 24px;
   color: var(--muted);
   font-family: var(--display);
-  font-size: 0.68rem;
+  font-size: 1.36rem;
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
 }
 
 .manifesto-line {
+  grid-column: -2 / -1;
   max-width: 25ch;
   margin: 0;
   font-family: var(--display);
@@ -683,7 +697,6 @@ h3 {
 }
 
 .section-heading > p,
-.people-lead > p,
 .about-copy > p {
   max-width: 40rem;
   margin-bottom: 0;
@@ -703,7 +716,7 @@ h3 {
 
 .research-item {
   display: grid;
-  grid-template-columns: 84px minmax(300px, 0.75fr) minmax(430px, 1.25fr);
+  grid-template-columns: minmax(300px, 0.75fr) minmax(430px, 1.25fr);
   gap: clamp(24px, 4vw, 64px);
   min-height: 650px;
   padding-block: clamp(48px, 6vw, 88px);
@@ -711,24 +724,35 @@ h3 {
 }
 
 .research-item--reverse {
-  grid-template-columns: 84px minmax(430px, 1.25fr) minmax(300px, 0.75fr);
+  grid-template-columns: minmax(430px, 1.25fr) minmax(300px, 0.75fr);
 }
 
 .research-item--reverse .research-copy {
-  grid-column: 3;
+  grid-column: 2;
 }
 
 .research-item--reverse .research-graphic {
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 1;
 }
 
+.research-kicker {
+  display: grid;
+  justify-items: start;
+  gap: 10px;
+  margin-bottom: 26px;
+}
+
 .research-number {
-  color: var(--muted);
+  margin: 0;
+  padding: 8px 14px;
+  color: var(--paper-bright);
+  background: var(--dark);
   font-family: var(--display);
-  font-size: 0.73rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.04em;
+  line-height: 1.35;
 }
 
 .research-copy {
@@ -739,7 +763,7 @@ h3 {
 }
 
 .research-scale {
-  margin-bottom: 30px;
+  margin: 0;
   color: var(--muted);
   font-family: var(--display);
   font-size: 0.66rem;
@@ -946,8 +970,7 @@ h3 {
     var(--dark);
 }
 
-.section-heading--dark .section-index,
-.section-heading--dark > p {
+.section-heading--dark .section-index {
   color: rgba(247, 250, 245, 0.6);
 }
 
@@ -1127,10 +1150,6 @@ h3 {
   margin-bottom: 40px;
 }
 
-.people-lead > p {
-  margin-bottom: 54px;
-}
-
 .pi-profile {
   display: grid;
   grid-template-columns: 132px minmax(0, 1fr);
@@ -1249,13 +1268,6 @@ h3 {
   overflow-wrap: anywhere;
 }
 
-.cohort-note {
-  margin: 20px 0 0;
-  color: var(--muted);
-  font-size: 0.68rem;
-  line-height: 1.7;
-}
-
 /* [LEARN-CSS-08] Methods：荧光色研究方法板块 */
 .methods {
   color: var(--dark);
@@ -1264,7 +1276,7 @@ h3 {
 
 .methods-head {
   display: grid;
-  grid-template-columns: minmax(120px, 0.25fr) minmax(0, 1.75fr);
+  grid-template-columns: minmax(230px, 0.35fr) minmax(0, 1.65fr);
   gap: 48px;
   align-items: start;
   margin-bottom: clamp(72px, 9vw, 128px);
@@ -1337,8 +1349,7 @@ h3 {
 }
 
 .about-grid .section-index,
-.about-copy > p,
-.about-note {
+.about-copy > p {
   color: rgba(247, 250, 245, 0.6);
 }
 
@@ -1377,11 +1388,6 @@ h3 {
 .contact-link span:first-child {
   font-size: 1.1rem;
   font-weight: 650;
-}
-
-.about-note {
-  margin: 24px 0 0;
-  font-size: 0.67rem;
 }
 
 /* [LEARN-CSS-10] Footer：页脚网格和辅助信息 */
@@ -1491,7 +1497,7 @@ h3 {
 
   .research-item,
   .research-item--reverse {
-    grid-template-columns: 64px minmax(260px, 0.78fr) minmax(360px, 1.22fr);
+    grid-template-columns: minmax(260px, 0.78fr) minmax(360px, 1.22fr);
     gap: 30px;
   }
 
@@ -1638,19 +1644,19 @@ h3 {
 
   .research-item,
   .research-item--reverse {
-    grid-template-columns: 58px 1fr;
+    grid-template-columns: 1fr;
     min-height: auto;
   }
 
   .research-item .research-copy,
   .research-item--reverse .research-copy {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 1;
   }
 
   .research-item .research-graphic,
   .research-item--reverse .research-graphic {
-    grid-column: 1 / -1;
+    grid-column: 1;
     grid-row: 2;
     min-height: min(72vw, 590px);
   }
@@ -1786,14 +1792,13 @@ h3 {
   }
 
   .hero-marquee {
-    justify-content: flex-start;
-    gap: 24px;
-    overflow: hidden;
-  }
-
-  .hero-marquee span:nth-of-type(3),
-  .hero-marquee i:nth-of-type(2) {
-    display: none;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+    gap: 14px;
+    padding: 28px 16px;
+    overflow: visible;
+    text-align: center;
   }
 
   .manifesto {
@@ -1825,7 +1830,6 @@ h3 {
     gap: 18px;
   }
 
-  .research-number,
   .research-item .research-copy,
   .research-item--reverse .research-copy,
   .research-item .research-graphic,
