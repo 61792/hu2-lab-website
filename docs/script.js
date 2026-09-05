@@ -138,31 +138,79 @@
     sections.forEach((section) => navObserver.observe(section));
   }
 
-  // [LEARN-JS-06] 成果筛选：切换 DOM 可见性并播报结果数量。
+  // [LEARN-JS-06] 成果筛选与折叠：每个筛选视图先展示 5 项，可按需展开全部。
   const filterButtons = [
     ...document.querySelectorAll(".output-filters [data-filter]"),
   ];
   const outputRows = [...document.querySelectorAll("[data-output-type]")];
   const outputStatus = document.querySelector("#outputStatus");
+  const outputExpand = document.querySelector("#outputExpand");
+  const outputExpandLabel = document.querySelector("#outputExpandLabel");
+  const outputVisibleLimit = 5;
+  let selectedOutputFilter = "all";
+  let outputsExpanded = false;
+
+  const getFilterLabel = () => {
+    const selectedButton = filterButtons.find(
+      (button) => button.dataset.filter === selectedOutputFilter,
+    );
+    return selectedButton?.childNodes[0]?.textContent.trim() || "成果";
+  };
+
+  const renderOutputs = () => {
+    const matchingRows = outputRows.filter(
+      (row) =>
+        selectedOutputFilter === "all" ||
+        row.dataset.outputType === selectedOutputFilter,
+    );
+    const shownCount = outputsExpanded
+      ? matchingRows.length
+      : Math.min(outputVisibleLimit, matchingRows.length);
+
+    outputRows.forEach((row) => {
+      const matchingIndex = matchingRows.indexOf(row);
+      const show = matchingIndex >= 0 && matchingIndex < shownCount;
+      row.hidden = !show;
+      row.classList.toggle("is-first-visible", show && matchingIndex === 0);
+    });
+
+    if (outputStatus) {
+      const label = selectedOutputFilter === "all" ? "成果" : getFilterLabel();
+      outputStatus.textContent = `显示 ${shownCount} / ${matchingRows.length} 项${label}`;
+    }
+
+    if (outputExpand) {
+      const hasMore = matchingRows.length > outputVisibleLimit;
+      outputExpand.hidden = !hasMore;
+      outputExpand.setAttribute("aria-expanded", String(outputsExpanded && hasMore));
+      if (outputExpandLabel && hasMore) {
+        outputExpandLabel.textContent = outputsExpanded
+          ? "收起至前 5 项"
+          : `展开其余 ${matchingRows.length - outputVisibleLimit} 项`;
+      }
+    }
+
+    requestScrollUI();
+  };
 
   filterButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      const selected = button.dataset.filter;
-      let visible = 0;
+      selectedOutputFilter = button.dataset.filter || "all";
+      outputsExpanded = false;
 
       filterButtons.forEach((item) => {
         item.setAttribute("aria-pressed", String(item === button));
       });
-
-      outputRows.forEach((row) => {
-        const show = selected === "all" || row.dataset.outputType === selected;
-        row.hidden = !show;
-        if (show) visible += 1;
-      });
-
-      if (outputStatus) outputStatus.textContent = `显示 ${visible} 项代表成果`;
+      renderOutputs();
     });
   });
+
+  outputExpand?.addEventListener("click", () => {
+    outputsExpanded = !outputsExpanded;
+    renderOutputs();
+  });
+
+  renderOutputs();
 
   // [LEARN-JS-07] Hero Canvas：网格、城市块、等值线、样本点和指针响应。
   const canvas = document.querySelector("#fieldCanvas");
