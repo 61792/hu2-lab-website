@@ -138,23 +138,70 @@
     sections.forEach((section) => navObserver.observe(section));
   }
 
-  // [LEARN-JS-06] 成果筛选与折叠：每个筛选视图先展示 5 项，可按需展开全部。
+  // [LEARN-JS-06] 成果筛选与折叠：研究方向可定位并高亮对应毕业论文。
   const filterButtons = [
     ...document.querySelectorAll(".output-filters [data-filter]"),
   ];
   const outputRows = [...document.querySelectorAll("[data-output-type]")];
+  const thesisRows = outputRows.filter(
+    (row) => row.dataset.outputType === "thesis",
+  );
+  const researchOutputLinks = [
+    ...document.querySelectorAll("[data-research-target]"),
+  ];
+  const outputFilterBar = document.querySelector(".output-filters");
   const outputStatus = document.querySelector("#outputStatus");
   const outputExpand = document.querySelector("#outputExpand");
   const outputExpandLabel = document.querySelector("#outputExpandLabel");
   const outputVisibleLimit = 5;
+  const researchDirectionLabels = {
+    1: "方向1 · 低碳城市与社区更新",
+    2: "方向2 · 社会—生态系统与区域治理",
+    3: "方向3 · 建成环境、行为与健康",
+  };
   let selectedOutputFilter = "all";
   let outputsExpanded = false;
+  let activeResearchDirection = "";
 
   const getFilterLabel = () => {
     const selectedButton = filterButtons.find(
       (button) => button.dataset.filter === selectedOutputFilter,
     );
     return selectedButton?.childNodes[0]?.textContent.trim() || "成果";
+  };
+
+  const setFilterButtonState = () => {
+    filterButtons.forEach((button) => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.filter === selectedOutputFilter),
+      );
+    });
+  };
+
+  const setThesisHighlight = (row, highlighted) => {
+    row.classList.toggle("is-research-highlighted", highlighted);
+    row.setAttribute("aria-pressed", String(highlighted));
+  };
+
+  const clearThesisHighlights = () => {
+    activeResearchDirection = "";
+    thesisRows.forEach((row) => setThesisHighlight(row, false));
+  };
+
+  const centerSelectedFilter = () => {
+    const selectedButton = filterButtons.find(
+      (button) => button.dataset.filter === selectedOutputFilter,
+    );
+    if (!outputFilterBar || !selectedButton) return;
+
+    const targetLeft =
+      selectedButton.offsetLeft -
+      (outputFilterBar.clientWidth - selectedButton.offsetWidth) / 2;
+    outputFilterBar.scrollTo({
+      left: Math.max(0, targetLeft),
+      behavior: reducedMotion.matches ? "auto" : "smooth",
+    });
   };
 
   const renderOutputs = () => {
@@ -175,8 +222,30 @@
     });
 
     if (outputStatus) {
-      const label = selectedOutputFilter === "all" ? "成果" : getFilterLabel();
-      outputStatus.textContent = `显示 ${shownCount} / ${matchingRows.length} 项${label}`;
+      const highlightedTheses = thesisRows.filter((row) =>
+        row.classList.contains("is-research-highlighted"),
+      );
+
+      if (selectedOutputFilter === "thesis" && highlightedTheses.length) {
+        const activeDirectionRows = activeResearchDirection
+          ? thesisRows.filter(
+              (row) =>
+                row.dataset.researchDirection === activeResearchDirection,
+            )
+          : [];
+        const isExactDirectionSelection =
+          activeDirectionRows.length === highlightedTheses.length &&
+          activeDirectionRows.every((row) =>
+            row.classList.contains("is-research-highlighted"),
+          );
+        const selectionLabel = isExactDirectionSelection
+          ? researchDirectionLabels[activeResearchDirection]
+          : "自定义选择";
+        outputStatus.textContent = `${selectionLabel}：已高亮 ${highlightedTheses.length} / ${matchingRows.length} 篇毕业论文；再次点击论文可取消高亮`;
+      } else {
+        const label = selectedOutputFilter === "all" ? "成果" : getFilterLabel();
+        outputStatus.textContent = `显示 ${shownCount} / ${matchingRows.length} 项${label}`;
+      }
     }
 
     if (outputExpand) {
@@ -197,11 +266,56 @@
     button.addEventListener("click", () => {
       selectedOutputFilter = button.dataset.filter || "all";
       outputsExpanded = false;
-
-      filterButtons.forEach((item) => {
-        item.setAttribute("aria-pressed", String(item === button));
-      });
+      clearThesisHighlights();
+      setFilterButtonState();
       renderOutputs();
+    });
+  });
+
+  researchOutputLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      const direction = link.dataset.researchTarget || "";
+      if (!researchDirectionLabels[direction]) return;
+
+      selectedOutputFilter = "thesis";
+      outputsExpanded = true;
+      activeResearchDirection = direction;
+      thesisRows.forEach((row) => {
+        setThesisHighlight(
+          row,
+          row.dataset.researchDirection === activeResearchDirection,
+        );
+      });
+      setFilterButtonState();
+      renderOutputs();
+      centerSelectedFilter();
+    });
+  });
+
+  thesisRows.forEach((row) => {
+    const title = row.querySelector("h3")?.textContent.trim() || "毕业论文";
+    const author = row.querySelector(".output-main p")?.textContent.trim() || "";
+    const direction = researchDirectionLabels[row.dataset.researchDirection] || "";
+    row.tabIndex = 0;
+    row.setAttribute("role", "button");
+    row.setAttribute("aria-pressed", "false");
+    row.setAttribute(
+      "aria-label",
+      `${direction}；毕业论文：${title}；${author}。按回车或空格切换高亮`,
+    );
+
+    const toggleHighlight = () => {
+      const highlighted = !row.classList.contains("is-research-highlighted");
+      activeResearchDirection = "";
+      setThesisHighlight(row, highlighted);
+      renderOutputs();
+    };
+
+    row.addEventListener("click", toggleHighlight);
+    row.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      toggleHighlight();
     });
   });
 
@@ -210,6 +324,7 @@
     renderOutputs();
   });
 
+  setFilterButtonState();
   renderOutputs();
 
   // [LEARN-JS-07] Hero Canvas：网格、城市块、等值线、样本点和指针响应。
